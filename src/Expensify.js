@@ -1,3 +1,4 @@
+/* eslint-disable rulesdir/onyx-props-must-have-default */
 import _ from 'underscore';
 import lodashGet from 'lodash/get';
 import PropTypes from 'prop-types';
@@ -102,6 +103,7 @@ function Expensify(props) {
     const isAuthenticated = useMemo(() => Boolean(lodashGet(props.session, 'authToken', null)), [props.session]);
     const shouldInit = isNavigationReady && (!isAuthenticated || props.isSidebarLoaded) && hasAttemptedToOpenPublicRoom;
     const shouldHideSplash = shouldInit && !isSplashHidden;
+    console.log('Expensify isSidebarLoaded', props.isSidebarLoaded);
 
     const initializeClient = () => {
         if (!Visibility.isVisible()) {

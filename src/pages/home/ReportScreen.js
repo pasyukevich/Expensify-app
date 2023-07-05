@@ -253,6 +253,8 @@ class ReportScreen extends React.Component {
 
         const policy = this.props.policies[`${ONYXKEYS.COLLECTION.POLICY}${this.props.report.policyID}`];
 
+        console.log('Report screen', this.props.isSidebarLoaded);
+
         return (
             <ReportScreenContext.Provider
                 value={{

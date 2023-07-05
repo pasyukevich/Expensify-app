@@ -1,3 +1,4 @@
+/* eslint-disable rulesdir/onyx-props-must-have-default */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import lodashGet from 'lodash/get';
@@ -12,6 +13,7 @@ import reportPropTypes from '../../../pages/reportPropTypes';
 import FullScreenLoadingIndicator from '../../../components/FullscreenLoadingIndicator';
 import {withNavigationPropTypes} from '../../../components/withNavigation';
 import * as App from '../../actions/App';
+import Test from './Test';
 
 const propTypes = {
     /** Available reports that would be displayed in this navigator */
