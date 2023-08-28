@@ -17,7 +17,6 @@ import NetworkConnection from '../../src/libs/NetworkConnection';
 import OnyxUpdateManager from '../../src/libs/actions/OnyxUpdateManager';
 
 jest.mock('../../src/libs/Log');
-jest.useFakeTimers();
 
 Onyx.init({
     keys: ONYXKEYS,
