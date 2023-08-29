@@ -1492,7 +1492,7 @@ function getReportPreviewMessage(report, reportAction = {}, shouldConsiderReceip
         ) {
             translatePhraseKey = 'iou.paidWithExpensifyWithAmount';
         }
-        return Localize.translateLocal(translatePhraseKey, {amount: formattedAmount});
+        return Localize.translateLocal(translatePhraseKey, {amount: formattedAmount, payer: shouldShowEmailForSettledIOU && payerName});
     }
 
     if (report.isWaitingOnBankAccount) {
