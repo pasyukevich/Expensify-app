@@ -28,6 +28,7 @@ import reportPropTypes from '../pages/reportPropTypes';
 import useNativeDriver from '../libs/useNativeDriver';
 import tryResolveUrlFromApiRoot from '../libs/tryResolveUrlFromApiRoot';
 import * as Expensicons from './Icon/Expensicons';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 /**
  * Modal render prop component that exposes modal launching triggers that can be used
@@ -108,6 +109,8 @@ function AttachmentModal(props) {
     const [isConfirmButtonDisabled, setIsConfirmButtonDisabled] = useState(false);
     const [confirmButtonFadeAnimation] = useState(new Animated.Value(1));
     const [shouldShowDownloadButton, setShouldShowDownloadButton] = React.useState(true);
+    const {windowWidth} = useWindowDimensions();
+
     const [file, setFile] = useState(
         props.originalFileName
             ? {
@@ -348,6 +351,7 @@ function AttachmentModal(props) {
                     onBackButtonPress={closeModal}
                     onCloseButtonPress={closeModal}
                     shouldShowThreeDotsButton={isAttachmentReceipt}
+                    threeDotsAnchorPosition={styles.threeDotsPopoverOffsetAttachmentModal(windowWidth)}
                     threeDotsMenuItems={[
                         {
                             icon: Expensicons.Camera,
