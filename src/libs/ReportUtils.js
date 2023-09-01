@@ -88,7 +88,7 @@ function getChatType(report) {
  */
 function getPolicy(policyID) {
     if (!allPolicies || !policyID) return {};
-    return allPolicies[`${ONYXKEYS.COLLECTION.POLICY}${policyID}`];
+    return allPolicies[`${ONYXKEYS.COLLECTION.POLICY}${policyID}`] || {};
 }
 
 /**
@@ -154,6 +154,7 @@ function getReportParticipantsTitle(accountIDs) {
  * @returns {Boolean}
  */
 function isChatReport(report) {
+    if (!report) return false;
     return report.type === CONST.REPORT.TYPE.CHAT;
 }
 
