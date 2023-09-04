@@ -165,6 +165,7 @@ function isChatReport(report) {
  * @returns {Boolean}
  */
 function isExpenseReport(report) {
+    if (!report) return false;
     return report.type === CONST.REPORT.TYPE.EXPENSE;
 }
 
@@ -175,6 +176,7 @@ function isExpenseReport(report) {
  * @returns {Boolean}
  */
 function isIOUReport(report) {
+    if (!report) return false;
     return report.type === CONST.REPORT.TYPE.IOU;
 }
 
@@ -185,6 +187,7 @@ function isIOUReport(report) {
  * @returns {Boolean}
  */
 function isTaskReport(report) {
+    if (!report) return false;
     return report.type === CONST.REPORT.TYPE.TASK;
 }
 
@@ -2878,7 +2881,6 @@ function shouldReportBeInOptionList(report, currentReportId, isInGSDMode, betas,
     if (report.hasDraft || isWaitingForIOUActionFromCurrentUser(report) || isWaitingForTaskCompleteFromAssignee(report)) {
         return true;
     }
-
     const lastVisibleMessage = ReportActionsUtils.getLastVisibleMessage(report.reportID);
     const isEmptyChat = !report.lastMessageText && !report.lastMessageTranslationKey && !lastVisibleMessage.lastMessageText && !lastVisibleMessage.lastMessageTranslationKey;
     const canHideReport = shouldHideReport(report, currentReportId);
@@ -2895,7 +2897,7 @@ function shouldReportBeInOptionList(report, currentReportId, isInGSDMode, betas,
 
     // Include reports that have errors from trying to add a workspace
     // If we excluded it, then the red-brock-road pattern wouldn't work for the user to resolve the error
-    if (report.errorFields && report.errorFields.addWorkspaceRoom !== 0) {
+    if (report.errorFields && report.errorFields.addWorkspaceRoom && report.errorFields.addWorkspaceRoom !== 0) {
         return true;
     }
 
