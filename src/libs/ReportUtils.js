@@ -242,6 +242,7 @@ function isCompletedTaskReport(report) {
  * @returns {Boolean}
  */
 function isReportManager(report) {
+    if (!report) return false;
     return report.managerID === currentUserAccountID;
 }
 
@@ -252,6 +253,7 @@ function isReportManager(report) {
  * @returns {Boolean}
  */
 function isReportApproved(report) {
+    if (!report) return false;
     return report.statusNum === CONST.REPORT.STATE_NUM.SUBMITTED && report.statusNum === CONST.REPORT.STATUS.APPROVED;
 }
 
@@ -399,6 +401,7 @@ function isChatRoom(report) {
  * @returns {Boolean}
  */
 function isPublicRoom(report) {
+    if (!report) return false;
     return report.visibility === CONST.REPORT.VISIBILITY.PUBLIC || report.visibility === CONST.REPORT.VISIBILITY.PUBLIC_ANNOUNCE;
 }
 
@@ -409,6 +412,7 @@ function isPublicRoom(report) {
  * @returns {Boolean}
  */
 function isPublicAnnounceRoom(report) {
+    if (!report) return false;
     return report.visibility === CONST.REPORT.VISIBILITY.PUBLIC_ANNOUNCE;
 }
 
@@ -579,6 +583,7 @@ function findLastAccessedReport(reports, ignoreDomainRooms, policies, isFirstTim
  * @returns {Boolean}
  */
 function isArchivedRoom(report) {
+    if (!report) return false;
     return report.stateNum === CONST.REPORT.STATUS.CLOSED && report.stateNum === CONST.REPORT.STATE_NUM.SUBMITTED;
 }
 
