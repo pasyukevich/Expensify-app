@@ -61,6 +61,12 @@ const propTypes = {
     /** Specifies autocomplete hints for the system, so it can provide autofill */
     autoComplete: PropTypes.oneOf(['sms-otp', 'one-time-code']).isRequired,
 
+    /** Determines if user is switched to using recovery code instead of 2fa code */
+    isUsingRecoveryCode: PropTypes.bool.isRequired,
+
+    /** Function to change `isUsingRecoveryCode` state when user toggles between 2fa code and recovery code */
+    setIsUsingRecoveryCode: PropTypes.func.isRequired,
+
     ...withLocalizePropTypes,
 };
 
@@ -78,7 +84,6 @@ function BaseValidateCodeForm(props) {
     const [validateCode, setValidateCode] = useState(props.credentials.validateCode || '');
     const [twoFactorAuthCode, setTwoFactorAuthCode] = useState('');
     const [timeRemaining, setTimeRemaining] = useState(30);
-    const [isUsingRecoveryCode, setIsUsingRecoveryCode] = useState(false);
     const [recoveryCode, setRecoveryCode] = useState('');
 
     const prevRequiresTwoFactorAuth = usePrevious(props.account.requiresTwoFactorAuth);
@@ -187,7 +192,7 @@ function BaseValidateCodeForm(props) {
         setTwoFactorAuthCode('');
         setFormError({});
         setValidateCode('');
-        setIsUsingRecoveryCode(false);
+        props.setIsUsingRecoveryCode(false);
         setRecoveryCode('');
     };
 
@@ -203,7 +208,7 @@ function BaseValidateCodeForm(props) {
      * Switches between 2fa and recovery code, clears inputs and errors
      */
     const switchBetween2faAndRecoveryCode = () => {
-        setIsUsingRecoveryCode(!isUsingRecoveryCode);
+        props.setIsUsingRecoveryCode(!props.isUsingRecoveryCode);
 
         setRecoveryCode('');
         setTwoFactorAuthCode('');
@@ -237,7 +242,7 @@ function BaseValidateCodeForm(props) {
             /**
              * User could be using either recovery code or 2fa code
              */
-            if (!isUsingRecoveryCode) {
+            if (!props.isUsingRecoveryCode) {
                 if (!twoFactorAuthCode.trim()) {
                     setFormError({twoFactorAuthCode: 'validateCodeForm.error.pleaseFillTwoFactorAuth'});
                     return;
@@ -271,7 +276,7 @@ function BaseValidateCodeForm(props) {
         }
         setFormError({});
 
-        const recoveryCodeOr2faCode = isUsingRecoveryCode ? recoveryCode : twoFactorAuthCode;
+        const recoveryCodeOr2faCode = props.isUsingRecoveryCode ? recoveryCode : twoFactorAuthCode;
 
         const accountID = lodashGet(props.credentials, 'accountID');
         if (accountID) {
@@ -286,7 +291,7 @@ function BaseValidateCodeForm(props) {
             {/* At this point, if we know the account requires 2FA we already successfully authenticated */}
             {props.account.requiresTwoFactorAuth ? (
                 <View style={[styles.mv3]}>
-                    {isUsingRecoveryCode ? (
+                    {props.isUsingRecoveryCode ? (
                         <TextInput
                             shouldDelayFocus
                             accessibilityLabel={props.translate('recoveryCodeForm.recoveryCode')}
@@ -322,9 +327,9 @@ function BaseValidateCodeForm(props) {
                         hoverDimmingValue={1}
                         pressDimmingValue={0.2}
                         accessibilityRole={CONST.ACCESSIBILITY_ROLE.BUTTON}
-                        accessibilityLabel={isUsingRecoveryCode ? props.translate('recoveryCodeForm.use2fa') : props.translate('recoveryCodeForm.useRecoveryCode')}
+                        accessibilityLabel={props.isUsingRecoveryCode ? props.translate('recoveryCodeForm.use2fa') : props.translate('recoveryCodeForm.useRecoveryCode')}
                     >
-                        <Text style={[styles.link]}>{isUsingRecoveryCode ? props.translate('recoveryCodeForm.use2fa') : props.translate('recoveryCodeForm.useRecoveryCode')}</Text>
+                        <Text style={[styles.link]}>{props.isUsingRecoveryCode ? props.translate('recoveryCodeForm.use2fa') : props.translate('recoveryCodeForm.useRecoveryCode')}</Text>
                     </PressableWithFeedback>
                 </View>
             ) : (
