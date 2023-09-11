@@ -1874,7 +1874,7 @@ function replaceReceipt(transactionID, receipt) {
             value: {
                 receipt: {
                     source: filePath,
-                    state: CONST.IOU.RECEIPT_STATE.SCANREADY,
+                    state: CONST.IOU.RECEIPT_STATE.OPEN,
                 },
                 filename: receipt.name,
             },
