@@ -578,7 +578,7 @@ function findLastAccessedReport(reports, ignoreDomainRooms, policies, isFirstTim
  * @returns {Boolean}
  */
 function isArchivedRoom(report) {
-    return report && report.stateNum === CONST.REPORT.STATUS.CLOSED && report.stateNum === CONST.REPORT.STATE_NUM.SUBMITTED;
+    return report && report.statusNum === CONST.REPORT.STATUS.CLOSED && report.stateNum === CONST.REPORT.STATE_NUM.SUBMITTED;
 }
 
 /**
@@ -2860,7 +2860,13 @@ function shouldReportBeInOptionList(report, currentReportId, isInGSDMode, betas,
         !report ||
         !report.reportID ||
         report.isHidden ||
-        (report.participantAccountIDs.length === 0 && !isChatThread(report) && !isPublicRoom(report) && !isArchivedRoom(report) && !isMoneyRequestReport(report) && !isTaskReport(report))
+        (report.participantAccountIDs &&
+            report.participantAccountIDs.length === 0 &&
+            !isChatThread(report) &&
+            !isPublicRoom(report) &&
+            !isArchivedRoom(report) &&
+            !isMoneyRequestReport(report) &&
+            !isTaskReport(report))
     ) {
         return false;
     }
