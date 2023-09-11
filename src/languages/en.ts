@@ -71,6 +71,7 @@ import type {
     RemovedTheRequestParams,
     TagSelectionParams,
     TranslationBase,
+    RequestedAmountMessageParams,
 } from './types';
 import * as ReportActionsUtils from '../libs/ReportActionsUtils';
 
@@ -515,6 +516,7 @@ export default {
         settleExpensify: ({formattedAmount}: SettleExpensifyCardParams) => `Pay ${formattedAmount} with Expensify`,
         payElsewhere: 'Pay elsewhere',
         requestAmount: ({amount}: RequestAmountParams) => `request ${amount}`,
+        requestedAmount: ({formattedAmount, comment}: RequestedAmountMessageParams) => `requested ${formattedAmount}${comment ? ` for ${comment}` : ''}`,
         splitAmount: ({amount}: SplitAmountParams) => `split ${amount}`,
         amountEach: ({amount}: AmountEachParams) => `${amount} each`,
         payerOwesAmount: ({payer, amount}: PayerOwesAmountParams) => `${payer} owes ${amount}`,
