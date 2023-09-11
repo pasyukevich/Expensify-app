@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {View, Animated, Keyboard} from 'react-native';
 import Str from 'expensify-common/lib/str';
@@ -29,6 +29,8 @@ import useNativeDriver from '../libs/useNativeDriver';
 import tryResolveUrlFromApiRoot from '../libs/tryResolveUrlFromApiRoot';
 import * as Expensicons from './Icon/Expensicons';
 import useWindowDimensions from '../hooks/useWindowDimensions';
+import Navigation from '../libs/Navigation/Navigation';
+import ROUTES from '../ROUTES';
 
 /**
  * Modal render prop component that exposes modal launching triggers that can be used
@@ -97,6 +99,7 @@ const defaultProps = {
 };
 
 function AttachmentModal(props) {
+    const onModalHideCallbackRef = useRef(null);
     const [isModalOpen, setIsModalOpen] = useState(props.defaultOpen);
     const [shouldLoadAttachment, setShouldLoadAttachment] = useState(false);
     const [isAttachmentInvalid, setIsAttachmentInvalid] = useState(false);
@@ -335,7 +338,14 @@ function AttachmentModal(props) {
                     setShouldLoadAttachment(true);
                 }}
                 onModalHide={(e) => {
-                    props.onModalHide(e);
+                    props.onModalHide(e)
+                        .then(() => {
+                            if (!onModalHideCallbackRef.current && !_.isFunction(onModalHideCallbackRef.current)) {
+                                return;
+                            }
+
+                            onModalHideCallbackRef.current();
+                        })
                     setShouldLoadAttachment(false);
                 }}
                 propagateSwipe
@@ -357,9 +367,8 @@ function AttachmentModal(props) {
                             icon: Expensicons.Camera,
                             text: props.translate('common.replace'),
                             onSelected: () => {
+                                onModalHideCallbackRef.current = () => Navigation.navigate(ROUTES.getEditRequestRoute(props.report.reportID, CONST.EDIT_REQUEST_FIELD.RECEIPT));
                                 closeModal();
-
-                                // TODO: Navigate user to edit receipt page
                             },
                         },
                         {
