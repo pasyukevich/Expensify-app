@@ -154,8 +154,7 @@ function getReportParticipantsTitle(accountIDs) {
  * @returns {Boolean}
  */
 function isChatReport(report) {
-    if (!report) return false;
-    return report.type === CONST.REPORT.TYPE.CHAT;
+    return report && report.type === CONST.REPORT.TYPE.CHAT;
 }
 
 /**
@@ -165,8 +164,7 @@ function isChatReport(report) {
  * @returns {Boolean}
  */
 function isExpenseReport(report) {
-    if (!report) return false;
-    return report.type === CONST.REPORT.TYPE.EXPENSE;
+    return report && report.type === CONST.REPORT.TYPE.EXPENSE;
 }
 
 /**
@@ -176,8 +174,7 @@ function isExpenseReport(report) {
  * @returns {Boolean}
  */
 function isIOUReport(report) {
-    if (!report) return false;
-    return report.type === CONST.REPORT.TYPE.IOU;
+    return report && report.type === CONST.REPORT.TYPE.IOU;
 }
 
 /**
@@ -187,8 +184,7 @@ function isIOUReport(report) {
  * @returns {Boolean}
  */
 function isTaskReport(report) {
-    if (!report) return false;
-    return report.type === CONST.REPORT.TYPE.TASK;
+    return report && report.type === CONST.REPORT.TYPE.TASK;
 }
 
 /**
@@ -242,8 +238,7 @@ function isCompletedTaskReport(report) {
  * @returns {Boolean}
  */
 function isReportManager(report) {
-    if (!report) return false;
-    return report.managerID === currentUserAccountID;
+    return report && report.managerID === currentUserAccountID;
 }
 
 /**
@@ -253,8 +248,7 @@ function isReportManager(report) {
  * @returns {Boolean}
  */
 function isReportApproved(report) {
-    if (!report) return false;
-    return report.statusNum === CONST.REPORT.STATE_NUM.SUBMITTED && report.statusNum === CONST.REPORT.STATUS.APPROVED;
+    return report && report.statusNum === CONST.REPORT.STATE_NUM.SUBMITTED && report.statusNum === CONST.REPORT.STATUS.APPROVED;
 }
 
 /**
@@ -401,8 +395,7 @@ function isChatRoom(report) {
  * @returns {Boolean}
  */
 function isPublicRoom(report) {
-    if (!report) return false;
-    return report.visibility === CONST.REPORT.VISIBILITY.PUBLIC || report.visibility === CONST.REPORT.VISIBILITY.PUBLIC_ANNOUNCE;
+    return (report && report.visibility === CONST.REPORT.VISIBILITY.PUBLIC) || report.visibility === CONST.REPORT.VISIBILITY.PUBLIC_ANNOUNCE;
 }
 
 /**
@@ -412,8 +405,7 @@ function isPublicRoom(report) {
  * @returns {Boolean}
  */
 function isPublicAnnounceRoom(report) {
-    if (!report) return false;
-    return report.visibility === CONST.REPORT.VISIBILITY.PUBLIC_ANNOUNCE;
+    return report && report.visibility === CONST.REPORT.VISIBILITY.PUBLIC_ANNOUNCE;
 }
 
 /**
@@ -583,8 +575,7 @@ function findLastAccessedReport(reports, ignoreDomainRooms, policies, isFirstTim
  * @returns {Boolean}
  */
 function isArchivedRoom(report) {
-    if (!report) return false;
-    return report.stateNum === CONST.REPORT.STATUS.CLOSED && report.stateNum === CONST.REPORT.STATE_NUM.SUBMITTED;
+    return report && report.stateNum === CONST.REPORT.STATUS.CLOSED && report.stateNum === CONST.REPORT.STATE_NUM.SUBMITTED;
 }
 
 /**
@@ -2902,7 +2893,7 @@ function shouldReportBeInOptionList(report, currentReportId, isInGSDMode, betas,
 
     // Include reports that have errors from trying to add a workspace
     // If we excluded it, then the red-brock-road pattern wouldn't work for the user to resolve the error
-    if (report.errorFields && report.errorFields.addWorkspaceRoom && report.errorFields.addWorkspaceRoom !== 0) {
+    if (report.errorFields && report.errorFields.addWorkspaceRoom) {
         return true;
     }
 
