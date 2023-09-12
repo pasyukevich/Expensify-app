@@ -339,7 +339,7 @@ function AttachmentModal(props) {
                 }}
                 onModalHide={(e) => {
                     props.onModalHide(e).then(() => {
-                        if (!onModalHideCallbackRef.current && !_.isFunction(onModalHideCallbackRef.current)) {
+                        if (!onModalHideCallbackRef.current) {
                             return;
                         }
 
