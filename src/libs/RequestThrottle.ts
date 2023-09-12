@@ -20,4 +20,8 @@ function sleep(): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, getRequestWaitTime()));
 }
 
-export {clear, getRequestWaitTime, sleep};
+function getRequestWaitTimeForTests() {
+    return requestWaitTime;
+}
+
+export {clear, getRequestWaitTime, sleep, getRequestWaitTimeForTests};
