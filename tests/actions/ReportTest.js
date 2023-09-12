@@ -36,9 +36,9 @@ describe('actions/Report', () => {
     });
 
     beforeEach(() => {
-        const promise = Onyx.clear().then(jest.useRealTimers)
-        waitForPromisesToResolve()
-        return promise
+        const promise = Onyx.clear().then(jest.useRealTimers);
+        waitForPromisesToResolve();
+        return promise;
     });
 
     afterEach(PusherHelper.teardown);
@@ -184,7 +184,7 @@ describe('actions/Report', () => {
     });
 
     it('should be updated correctly when new comments are added, deleted or marked as unread', () => {
-        jest.useFakeTimers()
+        jest.useFakeTimers();
         global.fetch = TestHelper.getGlobalFetchMock();
         const REPORT_ID = '1';
         let report;
@@ -204,7 +204,7 @@ describe('actions/Report', () => {
         const USER_1_LOGIN = 'user@test.com';
         const USER_1_ACCOUNT_ID = 1;
         const USER_2_ACCOUNT_ID = 2;
-        const setPromise =  Onyx.set(`${ONYXKEYS.COLLECTION.REPORT}${REPORT_ID}`, {reportName: 'Test', reportID: REPORT_ID})
+        const setPromise = Onyx.set(`${ONYXKEYS.COLLECTION.REPORT}${REPORT_ID}`, {reportName: 'Test', reportID: REPORT_ID})
             .then(() => TestHelper.signInWithTestUser(USER_1_ACCOUNT_ID, USER_1_LOGIN))
             .then(waitForPromisesToResolve)
             .then(waitForPromisesToResolve)
@@ -266,7 +266,7 @@ describe('actions/Report', () => {
                 currentTime = DateUtils.getDBTime();
                 Report.openReport(REPORT_ID);
                 Report.readNewestAction(REPORT_ID);
-                waitForPromisesToResolve()
+                waitForPromisesToResolve();
                 return waitForPromisesToResolve();
             })
             .then(() => {
@@ -380,7 +380,7 @@ describe('actions/Report', () => {
                     },
                     optimisticReportActions,
                 ]);
-        
+
                 return waitForPromisesToResolve();
             })
             .then(waitForPromisesToResolve)
@@ -411,8 +411,8 @@ describe('actions/Report', () => {
                 expect(ReportUtils.isUnread(report)).toBe(false);
                 expect(report.lastMessageText).toBe('Current User Comment 2');
             });
-        waitForPromisesToResolve() // flushing onyx.set as it wull be batched
-        return setPromise
+        waitForPromisesToResolve(); // flushing onyx.set as it wull be batched
+        return setPromise;
     });
 
     it('Should properly update comment with links', () => {
