@@ -30,7 +30,7 @@ describe('actions/IOU', () => {
 
     beforeEach(() => {
         global.fetch = TestHelper.getGlobalFetchMock();
-        return Onyx.clear().then(waitForPromisesToResolve).then(() => {console.log('before each clean')});
+        return Onyx.clear().then(waitForPromisesToResolve);
     });
 
     describe('requestMoney', () => {
@@ -406,7 +406,6 @@ describe('actions/IOU', () => {
                 .then(
                     () =>
                         new Promise((resolve) => {
-                            console.log('about to connnect')
                             const connectionID = Onyx.connect({
                                 key: ONYXKEYS.COLLECTION.REPORT,
                                 waitForCollectionCallback: true,
@@ -432,7 +431,6 @@ describe('actions/IOU', () => {
                 .then(
                     () =>
                         new Promise((resolve) => {
-                            console.log('about to connnect')
                             const connectionID = Onyx.connect({
                                 key: `${ONYXKEYS.COLLECTION.REPORT_ACTIONS}${iouReportID}`,
                                 waitForCollectionCallback: true,
@@ -499,15 +497,12 @@ describe('actions/IOU', () => {
                 .then(
                     () =>
                         new Promise((resolve) => {
-                            console.log('about to connnect')
                             const connectionID = Onyx.connect({
                                 key: `${ONYXKEYS.COLLECTION.REPORT_ACTIONS}${iouReportID}`,
                                 waitForCollectionCallback: true,
                                 callback: (reportActionsForIOUReport) => {
                                     Onyx.disconnect(connectionID);
-                                    console.log('disconnect')
                                     expect(_.size(reportActionsForIOUReport)).toBe(3);
-                                    console.log(reportActionsForIOUReport)
                                     _.each(reportActionsForIOUReport, (reportAction) => expect(reportAction.pendingAction).toBeFalsy());
                                     resolve();
                                 },
@@ -517,7 +512,6 @@ describe('actions/IOU', () => {
                 .then(
                     () =>
                         new Promise((resolve) => {
-                            console.log('about to connnect')
                             const connectionID = Onyx.connect({
                                 key: ONYXKEYS.COLLECTION.TRANSACTION,
                                 waitForCollectionCallback: true,
