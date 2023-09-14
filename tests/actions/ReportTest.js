@@ -16,6 +16,7 @@ import * as ReportUtils from '../../src/libs/ReportUtils';
 import DateUtils from '../../src/libs/DateUtils';
 import OnyxUpdateManager from '../../src/libs/actions/OnyxUpdateManager';
 import fastForwardTwoMicrotasksCycles from '../utils/fastForwardTwoMicrotasksCycles';
+import getIsUsingFakeTimers from '../utils/getIsUsingFakeTimers';
 
 jest.mock('../../src/libs/actions/Report', () => {
     const originalModule = jest.requireActual('../../src/libs/actions/Report');
@@ -38,7 +39,11 @@ describe('actions/Report', () => {
 
     beforeEach(() => {
         const promise = Onyx.clear().then(jest.useRealTimers);
-        waitForPromisesToResolve();
+        if (getIsUsingFakeTimers()) {
+            // flushing pending timers
+            // Onyx.clear() promise is resolved in batch which happends after the current microtasks cycle
+            setImmediate(jest.runOnlyPendingTimers);
+        }
         return promise;
     });
 
