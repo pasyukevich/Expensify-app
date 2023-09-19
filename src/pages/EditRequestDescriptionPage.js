@@ -7,11 +7,9 @@ import HeaderWithBackButton from '../components/HeaderWithBackButton';
 import Form from '../components/Form';
 import ONYXKEYS from '../ONYXKEYS';
 import styles from '../styles/styles';
-import Navigation from '../libs/Navigation/Navigation';
 import CONST from '../CONST';
 import useLocalize from '../hooks/useLocalize';
 import * as Browser from '../libs/Browser';
-import ROUTES from '../ROUTES';
 
 const propTypes = {
     /** Transaction default description value */
@@ -32,7 +30,6 @@ function EditRequestDescriptionPage({defaultDescription, onSubmit}) {
         >
             <HeaderWithBackButton
                 title={translate('common.description')}
-                onBackButtonPress={() => Navigation.goBack(ROUTES.HOME)}
             />
             <Form
                 style={[styles.flexGrow1, styles.ph5]}
