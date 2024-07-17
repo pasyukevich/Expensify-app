@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {lazy} from 'react';
 import {View} from 'react-native';
 import {useOnyx} from 'react-native-onyx';
 import HeaderWithBackButton from '@components/HeaderWithBackButton';
@@ -28,6 +28,12 @@ function PreferencesPage() {
     const styles = useThemeStyles();
     const {translate, preferredLocale} = useLocalize();
     const {isSmallScreenWidth} = useWindowDimensions();
+    console.log('ErrorComponent');
+
+    // Attempt to load the mocked chunk
+    const ErrorComponent = lazy(() => import('./SimulateErrorComponent'));
+
+    console.log('ErrorComponent');
 
     return (
         <ScreenWrapper

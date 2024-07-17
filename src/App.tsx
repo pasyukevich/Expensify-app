@@ -52,6 +52,53 @@ LogBox.ignoreLogs([
     'Setting a timer for a long period of time',
 ]);
 
+// // Function to log loaded chunks and simulate ChunkLoadError
+// function logAndSimulateChunkLoadError() {
+//     // eslint-disable-next-line @typescript-eslint/unbound-method
+//     const originalCreateElement = document.createElement;
+//     document.createElement = function(tagName, ...args) {
+//       const element = originalCreateElement.call(this, tagName, ...args);
+//       if (tagName === 'script') {
+//         element.addEventListener('load', function() {
+//           console.log('Loaded chunk:', element.src);
+//           // Simulate ChunkLoadError for a specific chunk
+//           if (element.src.includes('defaultScreenOptions')) { // replace 'your-chunk-name' with the actual chunk name
+//             console.error('Simulating ChunkLoadError for:', element.src);
+//             element.parentNode?.removeChild(element);
+//             const event = new Event('ChunkLoadError');
+//             element.dispatchEvent(event);
+//           }
+//         });
+//       }
+//       return element;
+//     };
+//   }
+  
+//   logAndSimulateChunkLoadError();
+
+// Ensure webpack is globally accessible
+// declare global {
+//     interface Window {
+//       __webpack_require__?: any;
+//     }
+//   }
+  
+//   // Log and simulate ChunkLoadError
+//   function logAndSimulateChunkLoadError() {
+//     if (window.__webpack_require__ && window.__webpack_require__.e) {
+//       const originalChunkLoad = window.__webpack_require__.e;
+//       window.__webpack_require__.e = function(chunkId: string) {
+//         console.log('Loading chunk:', chunkId);
+//         if (chunkId.includes('AuthScreens')) { // Replace with the actual chunk ID you want to target
+//           return Promise.reject(new Error('Simulated ChunkLoadError'));
+//         }
+//         return originalChunkLoad.call(this, chunkId);
+//       };
+//     }
+//   }
+  
+//   logAndSimulateChunkLoadError();
+
 const fill = {flex: 1};
 
 const StrictModeWrapper = CONFIG.USE_REACT_STRICT_MODE ? React.StrictMode : ({children}: {children: React.ReactElement}) => children;

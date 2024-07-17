@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import type {ForwardedRef, RefObject} from 'react';
-import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {lazy, useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import type {GestureResponderEvent} from 'react-native';
 import {ActivityIndicator, Dimensions, View} from 'react-native';
 import {withOnyx} from 'react-native-onyx';
@@ -73,6 +73,8 @@ function WalletPage({bankAccountList = {}, cardList = {}, fundList = {}, isLoadi
         methodID: '',
         selectedPaymentMethodType: '',
     });
+
+   
 
     const addPaymentMethodAnchorRef = useRef(null);
     const paymentMethodButtonRef = useRef<HTMLDivElement | null>(null);
@@ -347,6 +349,7 @@ function WalletPage({bankAccountList = {}, cardList = {}, fundList = {}, isLoadi
 
     return (
         <>
+            <LazyImport />
             {shouldShowEmptyState ? (
                 <WalletEmptyState onAddPaymentMethod={paymentMethodPressed} />
             ) : (

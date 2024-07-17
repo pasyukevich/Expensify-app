@@ -327,6 +327,9 @@ function AuthScreens({session, lastOpenedPublicRoomID, initialLastUpdateIDApplie
         cardStyle: styles.cardStyleNavigator,
     };
 
+    console.log('AuthScreens render');
+
+
     return (
         <OptionsListContextProvider>
             <View style={styles.rootNavigatorContainerStyles(isSmallScreenWidth)}>
